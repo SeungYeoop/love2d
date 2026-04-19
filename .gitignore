@@ -1,0 +1,35 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Lua / Luarocks
+lua_modules/
+rocks/
+.luarocks/
+
+# Build / Temp
+dist/
+build/
+tmp/
+temp/
+
+# Test / Coverage
+coverage/
+*.out
+
+# Love2D packaged or generated files
+*.love
+
+# Local env
+.env
+.env.*
