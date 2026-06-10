@@ -33,3 +33,12 @@ coverage/
 # Local env
 .env
 .env.*
+
+# Node (web client / server)
+node_modules/
+.vercel/
+
+# 독점 폰트는 재배포하지 않음 (데스크톱 LÖVE 판은 로컬 파일 사용).
+# 다른 PC에서는 C:\Windows\Fonts\malgun.ttf 를 assets/fonts/ 에 복사하세요.
+assets/fonts/*.ttf
+assets/fonts/*.otf

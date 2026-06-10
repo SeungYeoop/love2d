@@ -1,9 +1,36 @@
 # SESSION_SUMMARY
 
 ## 현재 세션 요약
-- 이 저장소를 LÖVE2D용 AI 프로토타이핑 템플릿으로 강화하는 중이다.
-- 기존 소스코드는 유지하고, 문서와 프롬프트, 실행 보조 스크립트를 정리하고 있다.
-- 현재 확인된 코드 파일은 `main.lua` 하나다.
+- 템플릿을 바탕으로 **온라인 1대1 탑뷰 배틀그라운드** 게임을 구현했다.
+- 네트워킹은 LÖVE 내장 `enet`(UDP), **호스트 권위(host-authoritative)** 모델.
+  - 호스트=플레이어1이 월드를 시뮬레이션하고 스냅샷을 전송.
+  - 클라이언트=플레이어2는 입력만 전송하고 받은 스냅샷을 렌더링.
+- 씬: `title`(메뉴) → `lobby`(방 만들기/참가) → `game`(대전).
+- 게임플레이: WASD 이동, 마우스 조준, 좌클릭/스페이스 사격, 엄폐물, 줄어드는 안전지대, HP 0/마지막 생존 승리.
+- 검증: 모든 모듈 로드 + 직렬화 왕복 통과, 실제 2개 인스턴스(host/client)로 enet 연결·양방향 데이터 교환 확인.
+
+## 웹 버전 (Vercel 배포용) — 이번 세션 추가
+- 데스크톱 LÖVE 앱은 Vercel/브라우저에 올릴 수 없어, 같은 게임을 웹으로 재작성했다.
+- 구조: `web/`(브라우저 클라이언트, Canvas) + `server/`(WebSocket 권위 서버, Node `ws`).
+  - `server/game.js`  — world.lua 를 그대로 옮긴 권위 시뮬레이션.
+  - `server/index.js` — WS 서버 + 방 코드 매칭(같은 코드 2명 → 자동 매칭) + 정적 서빙.
+  - `web/main.js`     — WS 연결, 입력 전송(30Hz), Canvas 렌더(스냅샷 기반).
+  - `web/config.js`   — `GAME_SERVER`(배포된 wss 주소) 설정 지점.
+- 배포: 클라이언트=Vercel(정적, Root Directory=web), 서버=Render(WS). 자세한 절차는 `DEPLOY.md`.
+- 검증: `server/smoketest.js` — 가짜 클라 2개로 매칭/스냅샷/부전승까지 PASS. 로컬 `npm start` 후 브라우저 2탭 확인.
+- IP 입력 없이 **방 코드**로 매칭(웹판 UX 개선). LÖVE 판은 그대로 유지.
+
+## 새 파일 구조 (이번 세션, LÖVE 판)
+- `src/net/net.lua`      — enet 래퍼(싱글톤): startHost/join/poll/send/close/localIP.
+- `src/net/protocol.lua` — 입력/스냅샷 직렬화(문자열 압축).
+- `src/game/world.lua`   — 권위 시뮬레이션(이동/충돌/총알/안전지대/승패) + 엄폐물 상수.
+- `src/game/render.lua`  — view 테이블 기반 렌더(호스트 월드/클라 스냅샷 공용).
+- `src/scenes/lobby.lua` — 호스트/참가 로비 + IP 입력.
+- `src/scenes/game.lua`  — 대전 루프(역할별 분기).
+- `scene_manager.lua`에 `textinput`/`quit` 위임 추가, `main.lua`에 lobby 등록.
+
+## 알아둘 점 (기존 요약 — 보존)
+- 이 저장소는 원래 LÖVE2D용 AI 프로토타이핑 템플릿이었다.
 
 ## 현재 프로젝트에 대해 파악한 점
 - 언어는 Lua다.

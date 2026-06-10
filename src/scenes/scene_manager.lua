@@ -23,6 +23,8 @@ function SM.update(dt)              if current and current.update       then cur
 function SM.draw()                  if current and current.draw         then current.draw()              end end
 function SM.keypressed(k, s, r)     if current and current.keypressed   then current.keypressed(k,s,r)   end end
 function SM.keyreleased(k, s)       if current and current.keyreleased  then current.keyreleased(k,s)    end end
+function SM.textinput(t)            if current and current.textinput    then current.textinput(t)        end end
+function SM.quit()                  if current and current.quit         then current.quit()              end end
 function SM.mousepressed(x,y,b)     if current and current.mousepressed then current.mousepressed(x,y,b) end end
 function SM.mousereleased(x,y,b)    if current and current.mousereleased then current.mousereleased(x,y,b) end end
 function SM.mousemoved(x,y,dx,dy)   if current and current.mousemoved   then current.mousemoved(x,y,dx,dy) end end

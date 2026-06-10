@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Top-Down Battle 1v1</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- 타이틀 / 로비 -->
+    <div id="menu" class="screen">
+      <h1>TOP-DOWN BATTLE</h1>
+      <p class="subtitle">1 vs 1 · 온라인</p>
+
+      <div class="panel">
+        <label for="room">방 코드</label>
+        <input id="room" type="text" maxlength="12" placeholder="예: FRIEND1" autocomplete="off" />
+        <button id="playBtn">입장 / 매칭</button>
+        <p class="hint">같은 방 코드를 입력한 두 사람이 자동으로 매칭됩니다.<br />친구에게 같은 코드를 알려주세요.</p>
+        <p id="status" class="status"></p>
+      </div>
+
+      <p class="controls">WASD 이동 · 마우스 조준 · 좌클릭/스페이스 사격</p>
+    </div>
+
+    <!-- 게임 -->
+    <div id="gameScreen" class="screen hidden">
+      <canvas id="canvas" width="960" height="720"></canvas>
+    </div>
+  </div>
+
+  <!-- 배포 후 이 값을 Render 서버 주소로 바꾸세요 (예: wss://my-battle.onrender.com) -->
+  <script src="config.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
